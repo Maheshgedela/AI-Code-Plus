@@ -1,0 +1,10 @@
+package com.example.submissionService.repository;
+
+import com.example.submissionService.model.Submission;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface  SubmissionRepository  extends JpaRepository<Submission,Long> {
+    List<Submission> findByUsernameOrderBySubmittedAtDesc(String username);
+}

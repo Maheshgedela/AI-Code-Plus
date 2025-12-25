@@ -1,0 +1,45 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        # 1. Problem Service API
+        - id: problem-service-api
+          uri: lb://PROBLEM-SERVICE
+          predicates:
+            - Path=/api/problems/**
+
+        # 2. Problem Service UI (Dashboard)
+        - id: problem-service-ui
+          uri: lb://PROBLEM-SERVICE
+          predicates:
+            - Path=/ui/**
+
+        # 3. User Service API
+        - id: user-service-api
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/users/**
+
+        # 4. Submission Service API
+        - id: submission-service-api
+          uri: lb://SUBMISSION-SERVICE
+          predicates:
+            - Path=/api/submissions/**
+
+        # 5. Notification Service API
+        - id: notification-service-api
+          uri: lb://NOTIFICATION-SERVICE
+          predicates:
+            - Path=/api/notifications/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
